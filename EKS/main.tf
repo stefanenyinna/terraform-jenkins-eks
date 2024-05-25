@@ -5,13 +5,13 @@ module "vpc" {
   name = "eks-vpc"
   cidr = var.vpc_cidr
 
-  azs            = data.aws_availability_zones.azs.names
-  public_subnets = var.public_subnets
+  azs             = data.aws_availability_zones.azs.names
+  public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
 
   enable_dns_hostnames = true
-  enable_nat_gateway = true
-  single_nat_gateway = true 
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
 
   tags = {
     "kubernetes.io/cluster/my-eks-cluster" = "shared"
@@ -20,9 +20,9 @@ module "vpc" {
     Name = "eks-public-subnet"
   }
   private_subnet_tags = {
-    Name = "eks-private-subnet"
+    Name                                   = "eks-private-subnet"
     "kubernetes.io/cluster/my-eks-cluster" = "shared"
-    "kubernetes.io/role/internal-elb" = "shared"
+    "kubernetes.io/role/internal-elb"      = 1
   }
 
 }
@@ -34,13 +34,12 @@ module "eks" {
   cluster_name    = "my-eks-cluster"
   cluster_version = "1.24"
 
-  cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access = true
 
 
 
-  vpc_id                   = module.vpc.default_vpc_id
-  subnet_ids               = module.vpc.private_subnets
-  control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
+  vpc_id     = module.vpc.default_vpc_id
+  subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_groups = {
     nodes = {
