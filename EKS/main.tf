@@ -40,7 +40,6 @@ module "eks" {
 
   vpc_id                   = module.vpc.default_vpc_id
   subnet_ids               = module.vpc.private_subnets
-  control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
 
   eks_managed_node_groups = {
     nodes = {
